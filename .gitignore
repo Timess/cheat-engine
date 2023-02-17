@@ -8,3 +8,4 @@ Cheat Engine/cheatengine.lps
 Cheat Engine/cheatengine.res
 /.vs
 /Cheat Engine/DotNetInvasiveDataCollector/DotNetInvasiveDataCollector/obj
+/dbvm/vmm/.d
