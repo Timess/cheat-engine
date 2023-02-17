@@ -78,7 +78,7 @@ release: clean install cdimage
 	cp vmdisk.img release
 	cp docs/readme.txt release
 	cp vmm/docs/vmcall.txt release
-	rar a dbvm.rar release/*
+	rar a dbvm.rar release/vmdisk.img
 	@echo "Your release file is ready"
 
 clean:
@@ -96,6 +96,5 @@ clean:
 	@-rm -rf iso
 	@-rm -rf release
 	@-rm -f vmcd.iso
-	@-rm -f dbvm.rar
 	@-rm -f *.elf
 	

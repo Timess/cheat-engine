@@ -71,3 +71,4 @@ clean:
 	@rm -f *.bin
 	@rm -f *.map
 	@rm -f *~
+	@rm -f *.32
