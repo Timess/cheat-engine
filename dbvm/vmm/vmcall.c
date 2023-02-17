@@ -2298,7 +2298,59 @@ int _handleVMCallInstruction(pcpuinfo currentcpuinfo, VMRegisters *vmregisters, 
 #endif
       break;
     }
+    case 259:
+    {
+        vmregisters->rax = 0;
+        break;
+    }
+    case 260:
+    {
+        int error;
+        QWORD pagefaultaddress;
+        UINT64 addr = ((PVMCALL_TESTREAD_PARAM)vmcall_instruction)->address;
+        UINT64 size = ((PVMCALL_TESTREAD_PARAM)vmcall_instruction)->size;
 
+        void* source = mapVMmemory(currentcpuinfo, addr, size, &error, &pagefaultaddress);
+
+        vmregisters->rax = 0;
+        vmregisters->rdx = 0;
+
+        if (error)
+        {
+            vmregisters->rax = 0x100 + error;
+            vmregisters->rdx = pagefaultaddress;
+        }
+        else
+        {
+            if (size == 1)
+                vmregisters->rax = *(unsigned char*)source;
+            else if (size == 2)
+                vmregisters->rax = *(unsigned short*)source;
+            else if (size == 4)
+                vmregisters->rax = *(unsigned int*)source;
+            else if (size == 8)
+                vmregisters->rax = *(UINT64*)source;
+            else {
+                vmregisters->rax = 0xdeadc0deaabbcccc;
+                vmregisters->rdx = 0xdeadc0deaabbcccc;
+            }
+
+
+            unmapVMmemory(source, size);
+
+        }
+
+        break;
+    } 
+    case 261:
+    {
+        if (CloakedPagesMap)
+            vmregisters->rax = 0xdeadc0deaabbcccc;
+        else
+            vmregisters->rax =  CloakedPagesList->size;
+       
+        break;
+    }
 
 
     default:

@@ -338,5 +338,18 @@ typedef struct
   double speedhackspeed;
 } __attribute__((__packed__)) VMCALL_SETSPEEDHACK_PARAM, *PVMCALL_SETSPEEDHACK_PARAM;
 
+typedef struct
+{
+    VMCALL_BASIC vmcall;
+    QWORD address;
+} __attribute__((__packed__)) VMCALL_TESTMAP_PARAM, * PVMCALL_TESTMAP_PARAM;
+
+typedef struct
+{
+    VMCALL_BASIC vmcall;
+    QWORD address;
+    QWORD size;
+} __attribute__((__packed__)) VMCALL_TESTREAD_PARAM, * PVMCALL_TESTREAD_PARAM;
+
 
 #endif /* VMM_VMCALLSTRUCTS_H_ */
